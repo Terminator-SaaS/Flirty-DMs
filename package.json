@@ -1,0 +1,17 @@
+{
+  "name": "claude-api-backend",
+  "version": "1.0.0",
+  "description": "Simple Node.js backend that proxies requests to the Claude API",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
