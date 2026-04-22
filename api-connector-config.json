@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "name": "Claude Flirty Replies",
+    "description": "Calls the Anthropic Claude API and returns 3 responses. Import this into Bubble via Plugins > API Connector.",
+    "bubble_plugin": "API Connector",
+    "version": "1.0.0"
+  },
+
+  "api": {
+    "name": "ClaudeAPI",
+    "authentication": "Private key in header",
+    "auth_header_name": "x-api-key",
+    "auth_header_value": "YOUR_ANTHROPIC_API_KEY",
+    "base_url": "https://api.anthropic.com"
+  },
+
+  "calls": [
+    {
+      "name": "Generate 3 Replies",
+      "method": "POST",
+      "path": "/v1/messages",
+      "use_as": "Action",
+      "headers": [
+        { "key": "Content-Type",       "value": "application/json" },
+        { "key": "x-api-key",          "value": "YOUR_ANTHROPIC_API_KEY" },
+        { "key": "anthropic-version",  "value": "2023-06-01" }
+      ],
+      "body": {
+        "model": "claude-opus-4-5",
+        "max_tokens": 1000,
+        "system": "You are a charming, witty flirt coach. Given a message someone received, generate exactly 3 flirty, playful reply options. They should be fun, light-hearted, and clever. Respond ONLY with a JSON array of exactly 3 strings. No keys, no explanation, no markdown. Example: [\"reply one\", \"reply two\", \"reply three\"]",
+        "messages": [
+          {
+            "role": "user",
+            "content": "<prompt>"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "key": "prompt",
+          "bubble_key": "prompt",
+          "type": "text",
+          "optional": false,
+          "description": "The message the user received and wants a flirty reply to"
+        }
+      ],
+      "response_mapping": {
+        "raw_text_path": "content[0].text",
+        "note": "The value at content[0].text is a JSON string like [\"reply1\",\"reply2\",\"reply3\"]. Parse it in Bubble using ':parsed as JSON', then access index 0, 1, 2 for each reply."
+      }
+    }
+  ]
+}
